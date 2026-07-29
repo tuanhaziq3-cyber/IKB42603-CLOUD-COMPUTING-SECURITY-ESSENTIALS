@@ -1,6 +1,7 @@
 # Lab 0 Report: Environment Setup & Verification
 
 **Prepared by:** Tuan Haziq Hakimi
+
 **Course:** IKB42603 Cloud Computing Security Essentials  
 **Date:** 29/7/2026
 
