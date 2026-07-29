@@ -70,3 +70,28 @@ LocalStack was deployed in a Docker container to simulate AWS services on port `
    aws configure set region us-east-1
    EP='--endpoint-url=http://localhost:4566'
    aws $EP sts get-caller-identity
+<img width="846" height="286" alt="image" src="https://github.com/user-attachments/assets/5bbb8f8c-47db-42e0-a4a4-b57f08e7bd99" />
+
+### 3.2 Kubernetes Cluster Deployment (`kind`)
+A local Kubernetes cluster named `ccse` was instantiated and verified using `kind` and `kubectl`.
+
+1. **Cluster Creation:** `kind create cluster --name ccse`
+2. **Cluster Info & Node Status:**
+   ```bash
+   kubectl cluster-info --context kind-ccse
+   kubectl get nodes
+<img width="1762" height="1088" alt="image" src="https://github.com/user-attachments/assets/5d27a676-1620-4087-9e5e-8942489a6fd5" />
+
+## 4. Verification Checklist Summary
+
+| Verification Task | Command / Check | Status |
+| :--- | :--- | :---: |
+| Docker Engine Active | `docker run --rm hello-world` | ✅ Pass |
+| AWS CLI v2 Installed | `aws --version` | ✅ Pass |
+| Kubernetes CLI Ready | `kubectl version --client` | ✅ Pass |
+| LocalStack Health | `curl http://localhost:4566/_localstack/health` | ✅ Pass |
+| LocalStack STS Identity | `aws $EP sts get-caller-identity` | ✅ Pass |
+| Kubernetes Cluster Ready | `kubectl get nodes` | ✅ Pass |
+
+5. Conclusion
+The local lab environment has been successfully deployed and verified. All containerization platforms, local cloud emulators, and orchestrators are operational and ready for upcoming lab exercises
