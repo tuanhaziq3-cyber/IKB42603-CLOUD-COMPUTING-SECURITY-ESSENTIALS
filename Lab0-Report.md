@@ -2,6 +2,7 @@
 
 **Course:** IKB42603 Cloud Computing Security Essentials  
 **Date:** 29/7/2026
+
 **Environment:** Kali Linux VM (VirtualBox)  
 
 ---
