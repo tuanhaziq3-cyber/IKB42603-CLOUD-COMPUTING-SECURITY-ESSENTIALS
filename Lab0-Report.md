@@ -93,5 +93,6 @@ A local Kubernetes cluster named `ccse` was instantiated and verified using `kin
 | LocalStack STS Identity | `aws $EP sts get-caller-identity` | ✅ Pass |
 | Kubernetes Cluster Ready | `kubectl get nodes` | ✅ Pass |
 
-5. Conclusion
-The local lab environment has been successfully deployed and verified. All containerization platforms, local cloud emulators, and orchestrators are operational and ready for upcoming lab exercises
+## 5. Conclusion
+
+The local lab environment has been successfully deployed and verified[cite: 1]. All containerization platforms, local cloud emulators, and orchestrators are fully operational and prepared for upcoming lab exercises[cite: 1].
