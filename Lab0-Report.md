@@ -1,7 +1,7 @@
 # Lab 0 Report: Environment Setup & Verification
 
 **Course:** IKB42603 Cloud Computing Security Essentials  
-**Date:** YYYY-MM-DD  
+**Date:** 29/7/2026 
 **Environment:** Kali Linux VM (VirtualBox)  
 
 ---
