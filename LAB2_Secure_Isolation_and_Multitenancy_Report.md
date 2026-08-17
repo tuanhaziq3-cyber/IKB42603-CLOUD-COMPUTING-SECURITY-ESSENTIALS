@@ -34,14 +34,12 @@ networking:
 <img width="624" height="284" alt="image" src="https://github.com/user-attachments/assets/c9c2edd8-ccf9-4d21-8b72-56dcf52dcb2b" />
 
 
-![kind cluster creation](./assets/task1-cluster-creation.png)
 
 Calico was then installed and its DaemonSet rollout was confirmed as ready before proceeding.
 
 <img width="624" height="414" alt="image" src="https://github.com/user-attachments/assets/26a7e863-57f4-4ad6-be24-d61de74112a0" />
 
 
-![Calico installation](./assets/task1-calico-install.png)
 
 ---
 
@@ -54,7 +52,6 @@ Two namespaces, `tenant-a` and `tenant-b`, were created to model two customers s
 <img width="624" height="312" alt="image" src="https://github.com/user-attachments/assets/beedd3b9-3fd0-46e1-84b6-711796f96bf5" />
 
 
-![Namespaces and deployments](./assets/task1-namespaces-deployments.png)
 
 ### Task 2 — Observe the Default-Open Risk
 
@@ -65,7 +62,6 @@ A temporary probe pod (`curlimages/curl`) was launched in `tenant-a` and used to
 <img width="624" height="76" alt="image" src="https://github.com/user-attachments/assets/d6b1fa07-9933-460d-99a7-967033ee03b8" />
 
 
-![Cross-tenant HTTP 200](./assets/task2-cross-tenant-http200.png)
 
 > **Observation:** Isolation between tenants is **not automatic** on a shared Kubernetes cluster. Namespaces alone provide a logical grouping/naming boundary, not a network security boundary.
 
@@ -89,7 +85,6 @@ spec:
 <img width="624" height="345" alt="image" src="https://github.com/user-attachments/assets/4c0e8b84-f349-4b09-abcd-290f0bd45d85" />
 
 
-![ResourceQuota applied](./assets/task3-resourcequota.png)
 
 ---
 
@@ -113,7 +108,6 @@ spec:
 <img width="622" height="225" alt="image" src="https://github.com/user-attachments/assets/d587ec85-e480-46df-9778-1be148b68d4c" />
 
 
-![NetworkPolicy applied](./assets/task4-networkpolicy-applied.png)
 
 The **same probe** from Task 2 was re-run from `tenant-a` against `tenant-b`'s Service IP.
 
@@ -121,7 +115,6 @@ The **same probe** from Task 2 was re-run from `tenant-a` against `tenant-b`'s S
 
 <img width="623" height="204" alt="image" src="https://github.com/user-attachments/assets/37767d20-a192-482c-a070-9de4091a3f6a" />
 
-![Before/after probe result](./assets/task4-before-after-probe.png)
 
 | Stage | Command | Result |
 |---|---|---|
@@ -150,7 +143,6 @@ kubectl auth can-i get secrets -n tenant-b --as=$SA   # expected: no
 <img width="624" height="300" alt="image" src="https://github.com/user-attachments/assets/951511e0-9d98-4254-b076-ef170f7caf70" />
 
 
-![RBAC secret isolation](./assets/task5-rbac-secret-isolation.png)
 
 ### Task 6 — Data Remanence & Secure Deletion
 
@@ -171,7 +163,6 @@ docker run --rm -v ccse-vol:/data alpine sh -c \
 
 <img width="624" height="385" alt="image" src="https://github.com/user-attachments/assets/cc0c5388-9d3a-4846-a4a0-5753a99f125b" />
 
-![Data remanence and verification](./assets/task6-remanence-and-verification.png)
 
 This screenshot also captures the **Section 6 verification commands** output: `kubectl get networkpolicy -A` confirms `default-deny-ingress` exists in `tenant-b`, and `kubectl describe resourcequota tenant-a-quota -n tenant-a` confirms the quota's hard limits (`pods: 5`, `requests.cpu: 1`, `requests.memory: 512Mi`).
 
