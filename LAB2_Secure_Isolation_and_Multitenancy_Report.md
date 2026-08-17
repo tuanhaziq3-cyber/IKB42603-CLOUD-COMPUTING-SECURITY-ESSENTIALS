@@ -226,22 +226,3 @@ docker volume rm ccse-vol
 This lab demonstrated, with direct evidence, that Kubernetes namespaces alone do **not** provide network isolation between tenants on shared infrastructure — cross-namespace traffic succeeds by default. Applying a default-deny `NetworkPolicy` (enforced by the Calico CNI) closed this gap, changing the identical cross-tenant request from `HTTP 200` to a timeout. A `ResourceQuota` was used to contain compute consumption per tenant, addressing the "noisy neighbour" risk. RBAC scoping proved that a tenant's ServiceAccount can read only its own Secrets (`yes`/`no` on `kubectl auth can-i`), and the data-remanence exercise showed how "deleted" data is handled at the filesystem level versus a secure overwrite. Together, this lab covers all three isolation dimensions — compute, network, and storage — required for safe multi-tenancy in the cloud.
 
 ---
-
-### Repository Structure
-
-```
-.
-├── LAB2_Secure_Isolation_and_Multitenancy_Report.md
-└── assets/
-    ├── task1-cluster-creation.png
-    ├── task1-calico-install.png
-    ├── task1-namespaces-deployments.png
-    ├── task2-cross-tenant-http200.png
-    ├── task3-resourcequota.png
-    ├── task4-networkpolicy-applied.png
-    ├── task4-before-after-probe.png
-    ├── task5-rbac-secret-isolation.png
-    └── task6-remanence-and-verification.png
-```
-
-*Place this file at the root of your GitHub repository (or in a `reports/` folder) alongside an `assets/` folder containing the screenshots above so the images render correctly on GitHub.*
