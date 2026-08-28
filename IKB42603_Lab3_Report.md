@@ -14,8 +14,7 @@
 The sensitive record was created and encrypted with AES-256-CBC (PBKDF2 key derivation). The resulting ciphertext (`record.enc`) begins with the `Salted__` header followed by unreadable binary data, confirming the plaintext is not recoverable without the key:
 
 ```
-<img width="1248" height="472" alt="image" src="https://github.com/user-attachments/assets/d65c2ba5-4459-407d-9fc0-f639dfce38be" />
-
+<img width="1248" height="472" alt="Screenshot 2026-08-28 083840" src="https://github.com/user-attachments/assets/038148d2-965f-48bd-8ab8-971317a44ca4" />
 ```
 
 Decryption was then performed and verified against the original file:
