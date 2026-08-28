@@ -13,16 +13,15 @@
 
 The sensitive record was created and encrypted with AES-256-CBC (PBKDF2 key derivation). The resulting ciphertext (`record.enc`) begins with the `Salted__` header followed by unreadable binary data, confirming the plaintext is not recoverable without the key:
 
-```
-<img width="1248" height="472" alt="Screenshot 2026-08-28 083840" src="https://github.com/user-attachments/assets/038148d2-965f-48bd-8ab8-971317a44ca4" />
-```
+<img width="1248" height="472" alt="Screenshot 2026-08-28 083840" src="https://github.com/user-attachments/assets/ed03b97a-332d-424b-b3cf-0ee28a98b825" />
+
 
 Decryption was then performed and verified against the original file:
 
-```
+
 <img width="1222" height="226" alt="image" src="https://github.com/user-attachments/assets/7e7ecd45-221d-4956-a127-d7d6b89d7ad7" />
 
-```
+
 
 **Result:** ✅ AES-256 encryption/decryption confirmed with MATCH output.
 
@@ -32,10 +31,10 @@ Decryption was then performed and verified against the original file:
 
 A 2048-bit RSA key pair was generated. The record was encrypted with the **public** key and decrypted with the **private** key; it was then signed with the **private** key and verified with the **public** key:
 
-```
+
 <img width="1744" height="678" alt="image" src="https://github.com/user-attachments/assets/7689fb5b-d20a-4220-a870-f5dc24374f2c" />
 
-```
+
 
 **Result:** ✅ RSA encrypt/decrypt succeeded; signature verification returned **Verified OK**.
 
@@ -45,7 +44,7 @@ A 2048-bit RSA key pair was generated. The record was encrypted with the **publi
 
 A self-signed certificate was generated and used to serve `record.txt` over HTTPS via an nginx container on port 8443:
 
-```
+
 $ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem \
   -days 7 -nodes -subj '/CN=localhost'
 ...................+++++
@@ -53,7 +52,7 @@ $ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem \
 
 <img width="838" height="140" alt="image" src="https://github.com/user-attachments/assets/51a063b0-fba1-4641-9d89-18f22790b0f5" />
 
-```
+
 
 **Result:** ✅ TLS-fronted content successfully retrieved through the container. (Note: the connection reached the service over the mapped port with a valid self-signed cert in place — pairing this with `curl -k https://…` on the encrypted port and a plain-HTTP comparison, as suggested in the manual, would make the "unencrypted vs encrypted channel" contrast explicit for the report.)
 
@@ -63,10 +62,10 @@ $ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem \
 
 A customer master key (CMK) for tenant A was created in LocalStack KMS, and a small secret was encrypted directly with it:
 
-```
+
 <img width="2868" height="1042" alt="image" src="https://github.com/user-attachments/assets/399fcfca-7cc7-41c0-b27d-8aa41dc43acd" />
 
-```
+
 
 **Result:** ✅ KMS master key created (KeyId `5364c2c2-1058-48b1-874d-f167042e2ec2`) and used to directly encrypt a small value.
 
@@ -76,10 +75,10 @@ A customer master key (CMK) for tenant A was created in LocalStack KMS, and a sm
 
 A data key was requested from KMS, split into its plaintext (`datakey.b64`) and KMS-wrapped (`datakey.enc`) forms, the plaintext key was used locally to encrypt the record with AES-256, and then the plaintext copy was deleted, leaving only the wrapped key on disk:
 
-```
+
 <img width="2622" height="782" alt="image" src="https://github.com/user-attachments/assets/aea5351b-487a-49c2-b8a1-91683dc7e740" />
 
-```
+
 
 **Result:** ✅ Envelope encryption completed — record encrypted locally with a data key, and only the KMS-wrapped (encrypted) copy of that data key was retained on disk.
 
@@ -89,18 +88,17 @@ A data key was requested from KMS, split into its plaintext (`datakey.b64`) and 
 
 A second, independent master key was created for tenant B:
 
-```
+
 <img width="2568" height="966" alt="image" src="https://github.com/user-attachments/assets/5d854ea9-058d-4fa4-8c85-52952b88e399" />
 
-```
+
 
 Tenant A's key was then scheduled for deletion, simulating cryptographic erasure:
 
-```
+
 <img width="2844" height="794" alt="image" src="https://github.com/user-attachments/assets/8190565c-8b2e-4801-b18e-b53b1148f66d" />
 
 
-```
 
 An attempt to unwrap tenant A's data key (`datakey.enc`) after erasure was initiated **failed**, confirming the data is now unrecoverable:
 
@@ -129,10 +127,10 @@ $ sha256sum record.txt tampered.txt
 
 A simple hash chain (tamper-evident log) was then built, where each entry's hash depends on the previous entry's hash:
 
-```
+
 <img width="624" height="138" alt="image" src="https://github.com/user-attachments/assets/be038eb2-fba3-495f-9fea-5577bf94d34b" />
 
-```
+
 
 **Result:** ✅ Tampering detected via differing SHA-256 digests; a 3-entry hash chain built where each link incorporates the previous hash.
 
@@ -140,10 +138,10 @@ A simple hash chain (tamper-evident log) was then built, where each entry's hash
 
 ### Verification Command Output
 
-```
+
 <img width="624" height="297" alt="image" src="https://github.com/user-attachments/assets/f34df4e2-94f2-41bb-b704-24e51d4d713a" />
 
-```
+
 
 ---
 
