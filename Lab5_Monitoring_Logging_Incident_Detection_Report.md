@@ -18,7 +18,8 @@ aws $EP logs create-log-group --log-group-name /ccse/app
 aws $EP logs create-log-stream --log-group-name /ccse/app --log-stream-name auth
 ```
 
-![Log group/stream creation](1788661570042_image.png)
+<img width="624" height="45" alt="image" src="https://github.com/user-attachments/assets/cdf60c27-a736-4959-9be9-8970f427db85" />
+
 
 ---
 
@@ -36,7 +37,8 @@ A sample authentication log was created, simulating a brute-force attempt follow
 2025-03-01T09:01:40 EXPORT_DATA user=admin ip=203.0.113.9 size=500MB
 ```
 
-![auth.log created](1788661574983_image.png)
+<img width="624" height="285" alt="image" src="https://github.com/user-attachments/assets/6669ee17-73a7-42f3-ac49-858b23f72263" />
+
 
 ---
 
@@ -52,7 +54,8 @@ while IFS= read -r line; do
 done < auth.log
 ```
 
-![Shipping logs to CloudWatch](1788661580699_image.png)
+<img width="624" height="86" alt="image" src="https://github.com/user-attachments/assets/a1e8afc8-18b3-4151-bb44-04b387c00c73" />
+
 
 **Centralised read-back (Task 2 evidence):**
 
@@ -61,7 +64,8 @@ aws $EP logs get-log-events --log-group-name /ccse/app --log-stream-name auth \
   --query 'events[].message' --output text
 ```
 
-![get-log-events read-back](1788661585627_image.png)
+<img width="624" height="75" alt="image" src="https://github.com/user-attachments/assets/3ec69bd7-f252-4b9e-83c8-6b397a639dd2" />
+
 
 All 7 log lines were successfully retrieved from the central store, confirming the logs were centralised rather than left only on the local host.
 
@@ -91,7 +95,8 @@ while IFS= read -r line; do
 done < auth.log > auth.chain
 ```
 
-![Building the hash chain](1788661590008_image.png)
+<img width="624" height="161" alt="image" src="https://github.com/user-attachments/assets/e4b9dab7-08e5-4cb6-bb8e-b3a2f938f41c" />
+
 
 **Tamper test:** The `EXPORT_DATA` line was altered (`500MB` → `5MB`) to simulate an attacker covering their tracks, and the chain was recomputed from the tampered file:
 
@@ -102,7 +107,8 @@ echo "Original Final Hash: $(tail -n1 auth.chain | awk -F'|' '{print $2}')"
 echo "Tampered Final Hash: $PREV_TAMPER"
 ```
 
-![Tamper detection](1788661598000_image.png)
+<img width="624" height="122" alt="image" src="https://github.com/user-attachments/assets/dbba782b-9e12-401d-806d-b666f15c7999" />
+
 
 **Result:**
 - Original Final Hash: `a8ba787b4bf524d9dad8dcac48e4989fc105769a6f17574f4f2cefe8f81233cf`
@@ -127,7 +133,8 @@ if [ "$FAILS" -ge 3 ] && [ "$SUCCESS" -ge 1 ] && [ "$EXPORT" -ge 1 ]; then
 fi
 ```
 
-![Correlation alert](1788661606816_image.png)
+<img width="624" height="106" alt="image" src="https://github.com/user-attachments/assets/db490018-394f-41a8-bb72-d5e9bd2d0a12" />
+
 
 **Output:**
 ```
@@ -150,7 +157,8 @@ docker run --rm --cap-add=NET_ADMIN alpine sh -c \
   'apk add -q iptables; iptables -A INPUT -s 203.0.113.9 -j DROP; iptables -L INPUT -n | tail -2'
 ```
 
-![Containment attempt](1788661611964_image.png)
+<img width="624" height="114" alt="image" src="https://github.com/user-attachments/assets/5dad6004-6e41-476d-a514-752a9ec4aaca" />
+
 
 **Result:** The command failed — the container could not resolve the Alpine package mirror (`dl-cdn.alpinelinux.org`) due to a DNS/network issue in the lab environment, so `iptables` could not be installed and the `DROP` rule was never applied. This is documented honestly below as a limitation of the run rather than a successful containment.
 
@@ -164,7 +172,8 @@ sha256sum evidence_*.log > evidence.sha256
 cat evidence.sha256
 ```
 
-![Evidence collection and verification](1788661618219_image.png)
+<img width="624" height="142" alt="image" src="https://github.com/user-attachments/assets/e9ec92da-33a1-4573-afa0-e127d9b63fd9" />
+
 
 **Result:**
 ```
