@@ -45,12 +45,10 @@ aws $EP s3api get-object-tagging --bucket $BUCKET --key confidential/record.txt
 ```
 
 **Evidence / output:**
-```
-[paste your list-objects-v2 table here]
-[paste your get-object-tagging output here]
-```
 
-**
+<img width="975" height="427" alt="image" src="https://github.com/user-attachments/assets/78d1d837-f1da-4399-aa4f-e7ec0be77718" />
+<img width="975" height="441" alt="image" src="https://github.com/user-attachments/assets/3dd674a4-d234-4d1e-9b97-981dc9e1ec27" />
+
 
 ### Task 2 — Reproduce the Archetypal Breach
 
@@ -87,7 +85,8 @@ cat leaked.txt
 [paste your curl HTTP status code + leaked.txt contents here]
 ```
 
-*[Screenshot 2: anonymous `curl` command and output showing `HTTP 200` and the leaked record text]*
+*<img width="975" height="434" alt="image" src="https://github.com/user-attachments/assets/320d27d4-5c44-45a3-84f1-17819f235c41" />
+*
 
 ### Task 3 — Remediate with Block Public Access
 
@@ -134,13 +133,12 @@ aws $EP s3api get-bucket-policy --bucket $BUCKET --query Policy --output text
 ```
 
 **Evidence / output:**
-```
-[paste your get-public-access-block output here — all four flags should read true]
-[paste your re-tested anonymous read HTTP status code here]
-[paste your final get-bucket-policy output here]
-```
 
-*[Screenshot 3: `get-public-access-block` output with all four flags `true`, plus the re-tested anonymous read result]*
+
+*<img width="975" height="442" alt="image" src="https://github.com/user-attachments/assets/e17cf1f7-2cac-4865-9ae6-a50c277e8e8d" />
+<img width="975" height="418" alt="image" src="https://github.com/user-attachments/assets/036ca877-e412-44e7-a93c-6bbdcd754c25" />
+
+*
 
 **Why a guardrail is stronger than a detective control:** a detective control (e.g. a script that reports "this bucket is public") only tells you *after the fact* that something went wrong. A preventative guardrail like Block Public Access stops the misconfiguration from ever taking effect, regardless of who applied it or why — it removes the dependency on someone noticing and reacting quickly enough.
 
@@ -225,7 +223,9 @@ aws $EP s3api delete-bucket-policy --bucket $BUCKET
 [paste "confidential: DENIED" result here, or your written evaluation if ENFORCE_IAM was not active]
 ```
 
-*[Screenshot 4: the analyst's two attempts — `internal: ALLOWED` and `confidential: DENIED` — or the written evaluation if `ENFORCE_IAM` was not active]*
+*<img width="975" height="377" alt="image" src="https://github.com/user-attachments/assets/0e1c9fd1-9125-477e-a00f-e654647bfc2f" />
+<img width="975" height="430" alt="image" src="https://github.com/user-attachments/assets/85989ee2-cec1-4197-a833-b1961febcadd" />
+*
 
 ---
 
@@ -268,12 +268,10 @@ aws $EP s3api head-object --bucket $BUCKET --key confidential/record-v2.txt \
 ```
 
 **Evidence / output:**
-```
-[paste your get-bucket-encryption output here]
-[paste your head-object output here — expect: aws:kms  <key-id>  True]
-```
 
-*[Screenshot 5: `head-object` output showing `aws:kms` and the KMS key ID]*
+*<img width="975" height="425" alt="image" src="https://github.com/user-attachments/assets/bbc1cb1d-f320-4277-bfaf-fe880060f830" />
+<img width="975" height="404" alt="image" src="https://github.com/user-attachments/assets/576c321b-0e87-4273-8343-8cb5b261c00c" />
+*
 
 ### Task 6 — Delegated Access and the Condition-Key Trap
 
@@ -319,13 +317,10 @@ aws $EP s3api delete-bucket-policy --bucket $BUCKET
 ```
 
 **Evidence / output:**
-```
-[paste your presigned URL curl result (before expiry) here]
-[paste your "after expiry" HTTP status code here]
-[paste the list-objects-v2 denial after the SecureTransport policy was applied here]
-```
 
-*[Screenshot 6: the bucket-wide failure/denial caused by the `aws:SecureTransport` policy]*
+*<img width="975" height="437" alt="image" src="https://github.com/user-attachments/assets/18d133ff-6b73-41af-9b27-f074d5062369" />
+<img width="975" height="456" alt="image" src="https://github.com/user-attachments/assets/6403968a-f599-4ec8-8018-4b7c116d18bf" />
+*
 
 ### Task 7 — Versioning, Delete Markers & Data Remanence
 
@@ -375,13 +370,11 @@ aws $EP s3api list-object-versions --bucket $BUCKET \
 ```
 
 **Evidence / output:**
-```
-[paste your version listing table here]
-[paste your delete marker listing here]
-[paste recovered.txt contents here — the original, unredacted diagnosis]
-```
 
-*[Screenshot 7: version listing, the delete marker, and `recovered.txt` still containing the original diagnosis]*
+*<img width="975" height="404" alt="image" src="https://github.com/user-attachments/assets/ccd6cb55-6036-4ef4-8ac1-025f017fa927" />
+<img width="975" height="460" alt="image" src="https://github.com/user-attachments/assets/d9d8eaa2-a5e3-40c6-aefb-6deed3d844a2" />
+<img width="975" height="155" alt="image" src="https://github.com/user-attachments/assets/08fbe2c7-45e0-4661-8389-bb5bbdc06b1c" />
+*
 
 ### Task 8 — Lifecycle, Retention & Cryptographic Erasure
 
@@ -429,13 +422,11 @@ aws $EP s3api get-object --bucket $BUCKET \
 ```
 
 **Evidence / output:**
-```
-[paste your lifecycle rules table here]
-[paste your KMS key state before/after schedule-key-deletion here]
-[paste the result of reading the object after the key was disabled here]
-```
 
-*[Screenshot 8: lifecycle rules table + KMS key state (`PendingDeletion`) after `schedule-key-deletion`]*
+
+*<img width="975" height="168" alt="image" src="https://github.com/user-attachments/assets/7a00ca39-8fa6-4cef-888a-624558f8f21e" />
+<img width="975" height="411" alt="image" src="https://github.com/user-attachments/assets/6874defa-dc80-4aea-9425-c0079ffa65b7" />
+*
 
 **Why cryptographic erasure is stronger for an auditor than overwriting:** overwriting requires control over the physical media the data was ever written to, including every backup, replica, and prior version — something a cloud tenant does not have. Cryptographic erasure needs to destroy only the (much smaller, centrally-managed) key material; once the key is gone, every copy of the ciphertext anywhere becomes mathematically unrecoverable regardless of how many copies exist or where they are stored.
 
